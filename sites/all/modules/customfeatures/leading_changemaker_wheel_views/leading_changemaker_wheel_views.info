@@ -1,0 +1,15 @@
+name = Leading Changemaker Wheel Views
+description = Views for Ashoka and Omidyar and main Wheel
+core = 7.x
+package = Features
+version = 7.x-1.2-beta1
+project = leading_changemaker_wheel_views
+dependencies[] = better_exposed_filters
+dependencies[] = ctools
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = fellows_excerpt_randomized
+features[views_view][] = leading_changemakers
+features[views_view][] = omidyar_investees_randomized
+mtime = 1438324797

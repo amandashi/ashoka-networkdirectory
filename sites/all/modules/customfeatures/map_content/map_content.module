@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Map content feature.
+ */
+
+include_once 'map_content.features.inc';

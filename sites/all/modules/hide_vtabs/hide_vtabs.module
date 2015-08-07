@@ -1,0 +1,68 @@
+<?php
+/**
+ * @file
+ * Handle the display of vertical tabs on a per content type basis.
+ */
+
+define('HIDE_VTAB_STATUS_HIDDEN', 0);
+define('HIDE_VTAB_STATUS_ENABLED', 1);
+define('HIDE_VTAB_STATUS_REVISION_ONLY', 2);
+
+/**
+ * Implement hook_form_BASE_FORM_ID_alter().
+ */
+function hide_vtabs_form_node_type_form_alter(&$form, &$form_state) {
+  $node_type = $form['#node_type']->type;
+
+  $options = array(
+    HIDE_VTAB_STATUS_ENABLED => 'Show vertical tabs',
+    HIDE_VTAB_STATUS_HIDDEN => 'Hide vertical tabs',
+    HIDE_VTAB_STATUS_REVISION_ONLY => 'Show revision only',
+  );
+
+  $form['hide_vtabs'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Hide Vertical Tabs'),
+    '#collapsible' => TRUE,
+    '#group' => 'additional_settings',
+    '#description' => t('Specify display settings of vertical tabs on current content type.'),
+  );
+
+  $form['hide_vtabs']['vtabs_status'] = array(
+    '#type' => 'radios',
+    '#default_value' => variable_get('hide_vtab_node_' . $node_type . '_status', HIDE_VTAB_STATUS_ENABLED),
+    '#options' => $options,
+    '#description' => t('Options available for vertical tabs visibility. "Show revision only" option will become a fieldset.'),
+  );
+
+  $form['#submit'][] = 'hide_vtabs_node_type_submit';
+}
+
+/**
+ * Submit handler to input the vertical tabs status.
+ */
+function hide_vtabs_node_type_submit(&$form, &$form_state) {
+  $node_type = $form['#node_type']->type;
+  variable_set('hide_vtab_node_' . $node_type . '_status', $form_state['values']['vtabs_status']);
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function hide_vtabs_form_node_form_alter(&$form, &$form_state) {
+  $node_type = $form['type']['#value'];
+  $vtabs_status = variable_get('hide_vtab_node_' . $node_type . '_status', HIDE_VTAB_STATUS_ENABLED);
+
+  if (HIDE_VTAB_STATUS_ENABLED != $vtabs_status) {
+    if (HIDE_VTAB_STATUS_REVISION_ONLY == $vtabs_status) {
+      unset($form['revision_information']['#group']);
+      $form['revision_information']['#collapsible'] = FALSE;
+    }
+    unset($form['additional_settings']);
+    foreach ($form as $key => $value) {
+      if (is_array($form[$key]) && isset($form[$key]['#group'])) {
+        unset($form[$key]);
+      }
+    }
+  }
+}

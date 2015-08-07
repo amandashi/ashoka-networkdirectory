@@ -1,0 +1,11 @@
+name = Hide Vertical Tabs
+description = Controls the display of vertical tabs on a per content type basis
+core = "7.x"
+project = "hide_vtabs"
+
+; Information added by Drupal.org packaging script on 2014-03-27
+version = "7.x-1.0-beta1"
+core = "7.x"
+project = "hide_vtabs"
+datestamp = "1395908043"
+

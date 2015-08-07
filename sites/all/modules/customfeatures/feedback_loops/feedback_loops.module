@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Feedback Loops feature.
+ */
+
+include_once 'feedback_loops.features.inc';

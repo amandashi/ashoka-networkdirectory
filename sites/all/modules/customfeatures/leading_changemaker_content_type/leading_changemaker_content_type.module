@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Leading Changemaker Content Type feature.
+ */
+
+include_once 'leading_changemaker_content_type.features.inc';

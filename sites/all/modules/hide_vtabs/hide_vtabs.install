@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * Hide Vertical Tabs module installation functions.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function hide_vtabs_install() {
+  // To work properly, hide_vtabs must be the last module to load.
+  db_update('system')
+    ->fields(array('weight' => '9999'))
+    ->condition('name', 'hide_vtabs')
+    ->execute();
+}
